@@ -9,8 +9,8 @@ export async function getContactById(id) {
 }
 
 export const createContact = async (payload) => {
-  const student = await Contact.create(payload);
-  return student;
+  const contact = await Contact.create(payload);
+  return contact;
 };
 
 export const deleteContact = async (contactId) => {
