@@ -14,6 +14,11 @@ const PORT = Number(process.env.PORT);
 
 export function setupServer() {
   const app = express();
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+    }),
+  );
   app.use(cors());
 
   app.use(
