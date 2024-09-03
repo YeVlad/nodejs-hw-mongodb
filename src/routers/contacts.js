@@ -1,8 +1,5 @@
 import { Router } from 'express';
 
-import { checkRoles } from '../middlewares/checkRoles.js';
-import { ROLES } from '../constants/index.js';
-
 import { authenticate } from '../middlewares/authenticate.js';
 
 import {
@@ -27,31 +24,20 @@ import { isValidId } from '../middlewares/isValidId.js';
 
 router.use(authenticate);
 
-router.get('/', checkRoles(ROLES.TEACHER), ctrlWrapper(getContactController));
+router.get('/', ctrlWrapper(getContactController));
 
-router.get(
-  '/:contactId',
-  checkRoles(ROLES.TEACHER, ROLES.PARENT),
-  isValidId,
-  ctrlWrapper(getContactByIdController),
-);
+router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
 
 router.post(
   '/',
-  checkRoles(ROLES.TEACHER),
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
-router.delete(
-  '/:contactId',
-  checkRoles(ROLES.TEACHER),
-  ctrlWrapper(deleteContactController),
-);
+router.delete('/:contactId', ctrlWrapper(deleteContactController));
 
 router.put(
   '/:contactId',
-  checkRoles(ROLES.TEACHER),
   isValidId,
   validateBody(createContactSchema),
   ctrlWrapper(upsertContactController),
@@ -59,7 +45,6 @@ router.put(
 
 router.patch(
   '/:contactId',
-  checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
