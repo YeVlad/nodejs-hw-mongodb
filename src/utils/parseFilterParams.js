@@ -1,37 +1,32 @@
-const parseGender = (gender) => {
-  const isString = typeof gender === 'string';
+const parseContactType = (contactType) => {
+  const isString = typeof contactType === 'string';
   if (!isString) return;
-  const isGender = (gender) => ['male', 'female', 'other'].includes(gender);
 
-  if (isGender(gender)) return gender;
+  const isContactType = ['work', 'home', 'personal'].includes(contactType);
+  if (!isContactType) return;
+
+  return contactType;
 };
-
-const parseNumber = (number) => {
-  const isString = typeof number === 'string';
-  if (!isString) return;
-
-  const parsedNumber = parseInt(number);
-  if (Number.isNaN(parsedNumber)) {
-    return;
+const parseBoolean = (Favourite) => {
+  if (typeof Favourite === 'string') {
+    if (Favourite === 'true') return true;
+    if (Favourite === 'false') return false;
   }
 
-  return parsedNumber;
+  if (typeof Favourite === 'boolean') {
+    return Favourite;
+  }
+
+  return;
 };
 
 export const parseFilterParams = (query) => {
-  const { gender, maxAge, minAge, maxAvgMark, minAvgMark } = query;
-
-  const parsedGender = parseGender(gender);
-  const parsedMaxAge = parseNumber(maxAge);
-  const parsedMinAge = parseNumber(minAge);
-  const parsedMaxAvgMark = parseNumber(maxAvgMark);
-  const parsedMinAvgMark = parseNumber(minAvgMark);
+  const { contactType, isFavourite } = query;
+  const parsedContactType = parseContactType(contactType);
+  const parsedIsFavourite = parseBoolean(isFavourite);
 
   return {
-    gender: parsedGender,
-    maxAge: parsedMaxAge,
-    minAge: parsedMinAge,
-    maxAvgMark: parsedMaxAvgMark,
-    minAvgMark: parsedMinAvgMark,
+    contactType: parsedContactType,
+    isFavourite: parsedIsFavourite,
   };
 };
