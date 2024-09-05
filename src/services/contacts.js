@@ -56,12 +56,14 @@ export const updateContact = async (
   contactId,
   payload,
   userId,
+  photo,
   options = {},
 ) => {
   const rawResult = await Contacts.findOneAndUpdate(
     {
       _id: contactId,
       userId,
+      photo,
     },
     payload,
     {
