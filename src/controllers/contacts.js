@@ -8,7 +8,7 @@ import {
 } from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
-import { parseFilterParams } from '../utils/parsePaginationParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
