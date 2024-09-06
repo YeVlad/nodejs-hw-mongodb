@@ -1,45 +1,53 @@
-import { Router } from 'express';
-import { validateBody } from '../middlewares/validateBody.js';
-import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import express from "express";
+import { Router } from "express";
+
+import { validateBody } from "../middlewares/validateBody.js";
 import {
-  loginUserController,
-  logoutUserController,
-  refreshUserSessionController,
-  registerUserController,
-} from '../controllers/user.js';
-import { requestResetEmailSchema } from '../validation/auth.js';
-import { requestResetEmailController } from '../controllers/auth.js';
-import { resetPasswordSchema } from '../validation/auth.js';
-import { resetPasswordController } from '../controllers/auth.js';
+    loginUserController,
+    logoutUserController,
+    refreshUserSessionController,
+    registerUserController,
+    requestResetEmailController,
+    resetPasswordController,
+} from "../controllers/auth.js";
+import {
+    loginUserSchema,
+    registerUserSchema,
+    requestResetEmailSchema,
+    resetPasswordSchema,
+} from "../db/validation/auth.js";
+import { ctrlWrapper } from "../utils/ctrlWrapper.js";
+
+
 const router = Router();
+const jsonParser = express.json();
 
 router.post(
-  '/register',
-  validateBody(registerUserSchema),
-  ctrlWrapper(registerUserController),
-);
-
+    "/register",
+    jsonParser,
+    validateBody(registerUserSchema),
+    ctrlWrapper(registerUserController));
 router.post(
-  '/login',
-  validateBody(loginUserSchema),
-  ctrlWrapper(loginUserController),
-);
+    "/login",
+    jsonParser,
+    validateBody(loginUserSchema),
+    ctrlWrapper(loginUserController));
 
-router.post('/logout', ctrlWrapper(logoutUserController));
+router.post("/logout",
+    ctrlWrapper(logoutUserController));
 
-router.post('/refresh', ctrlWrapper(refreshUserSessionController));
+router.post("/refresh",
+    ctrlWrapper(refreshUserSessionController));
 
-router.post(
-  '/send-reset-email',
-  validateBody(requestResetEmailSchema),
-  ctrlWrapper(requestResetEmailController),
-);
+router.post("/send-reset-email",
+    jsonParser,
+    validateBody(requestResetEmailSchema),
+    ctrlWrapper(requestResetEmailController));
 
-router.post(
-  '/reset-pwd',
-  validateBody(resetPasswordSchema),
-  ctrlWrapper(resetPasswordController),
+router.post("/reset-pwd",
+    jsonParser,
+    validateBody(resetPasswordSchema),
+    ctrlWrapper(resetPasswordController)
 );
 
 export default router;
